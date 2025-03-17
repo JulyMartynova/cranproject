@@ -11,14 +11,14 @@ body {
   height: 100vh;
 }
 .wrapper {
-  margin: 50px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  margin-right: 50px;
+  margin-left: 50px;
   font-size: 17px;
   
 }
-.wrapper header {
-  background-color: white;
-  color: black;
-}
+
 @keyframes slide{
   from {
     opacity: 0;
@@ -28,6 +28,9 @@ body {
     transition: translateY(0px);
   }
 }
+.team-container{
+  animation: slide 2s ease-in-out 1s both;
+}
 .team {
   display: flex;
   margin: 50px; 
@@ -36,7 +39,7 @@ body {
   flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 50px;
-  animation: slide 2s ease-in-out 1s both;
+  
 }
 .member {
   display: flex;
@@ -65,7 +68,24 @@ header {
   color: rgb(7, 7, 7);
   justify-content: space-between;
   padding: 20px 50px;
-} 
+  box-sizing: border-box;
+  height: 70px;
+}
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  box-sizing: border-box;
+}
+.logo a img {
+  height: 100%; /* Установите высоту изображения равной 100% */
+  width: auto;
+  object-fit: contain;
+  overflow: hidden;
+  display: none;
+}
 .nav-list ul {
   list-style-type: none;
   padding: 0;
@@ -82,7 +102,6 @@ header {
 }
 .nav-list li a:hover{
   text-decoration: underline;
-  color: rgb(233, 233, 233);
 }
 @keyframes transp {
   from {
@@ -522,6 +541,7 @@ button[type="submit"] :hover{
   gap: 50px;
   margin-top: 50px;
   margin-bottom: 50px;
+  animation: up 2s ease-in-out 1s both;
 }
 .carousel button {
   background-color: #dcdcdc;
@@ -539,6 +559,14 @@ button[type="submit"] :hover{
   background-color: #cacaca;
   border: 1px solid rgb(179, 179, 179);
   
+}
+.carousel button.carousel-button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+}
+.carousel button.carousel-button:hover{
+  scale: 1.5;
 }
 .product {
   width: 70%;

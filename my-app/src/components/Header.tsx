@@ -1,6 +1,6 @@
 // Header.tsx
 import React from 'react';
-
+import logo from '../pages/cran.jpg'
 import { CSSProperties } from 'react';
 
 // Определяем интерфейс для стилей
@@ -20,6 +20,9 @@ const Header: React.FC<HeaderProps> = ({styles ={} , children}) => {
   return (
     <header style={styles.header }>
       <div className="logo">
+      <a href="/" target='_blank' rel="noopener noreferrer">
+            <img src={logo} alt ="logo" />
+          </a>
         <span>CranProject</span>
       </div>
       <nav className="nav-list">

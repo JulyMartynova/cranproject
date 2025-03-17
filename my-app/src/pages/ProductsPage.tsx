@@ -66,8 +66,7 @@ const ProductsPage = () => {
             </div>
             <div className = "carousel">
                 <button onClick = {goToPrevious} disabled = {index === 0} className='carousel-button'> {"<"}</button>
-                <div className = "product">
-                    
+                <div className = "product">  
                 <img src={photos[index].url} alt = {photos[index].url} />
                 <h2>{photos[index].name}</h2>
                 <p>{photos[index].description}</p>
@@ -75,11 +74,11 @@ const ProductsPage = () => {
                 </div>
                 <button onClick = {goToNext} disabled = {index === photos.length - 1} className='carousel-button'> {">"}</button>
             </div>
-            <div className = "button-container">
+            {/* <div className = "button-container">
                 <a href = "https://t.me/cranproject" target='_blank' rel="noopener noreferer"><Download style = {{width: '30%'}}></Download>APK</a>
                 <a href = "https://t.me/cranproject" target='_blank' rel= "noopener noreferrer"><Google style = {{width: '30%'}}/> Google</a>
                 <a href = "https://t.me/cranproject" target='_blank' rel="noopener noreferer"><Store style = {{width: '30%'}}></Store>Ru Store</a>
-            </div>
+            </div> */}
         </div>
         <Footer></Footer>
         </div>
