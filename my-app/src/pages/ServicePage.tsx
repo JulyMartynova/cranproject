@@ -1,12 +1,26 @@
-import React from "react";
-import serv from "./sev1.jpg"
+import React, {useState, useEffect} from "react";
+import serv from "./sev1.jpg";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import {Service, fetchServices} from "../api/servicesGetter";
+// import {useLoadErrorHandler} from "../components/useLoadingWithError"
 
 const ServicePage: React.FC = () => {
-    interface Service {
-        id: number;
-        name: string;
-        description: string;
-    };
+    // const {loading, error, executeErrorHandling} = useLoadErrorHandler();
+    
+    //   useEffect(() => {
+    //     const loadServices = async () => {
+    //         try {
+    //             const services = await executeWithErrorHandling(fetchServices);
+    //             console.log('Загруженные сервисы:', services);
+    //         } catch (err) {
+    //             console.error('Ошибка:', err);
+    //         }
+    //     };
+
+    //     loadServices();
+    // }, [executeWithErrorHandling]);
+    
     const services : Service[] = [{
         id: 1, name: "AR-Экскурсии", description: "Добавляем интерактивные AR-элементы для улучшения вашего экскурсионного опыта.",
     },
@@ -19,13 +33,16 @@ const ServicePage: React.FC = () => {
 
 ]
     return (
+        <div>
+            <Header ></Header>
         <div className = "wrapper">
+            
             <div className = "service-container">
             {services.map((service => (
-                <div className = "service">
+                <div className = "service" key = {service.id}>
                 <img src  = {serv} alt = "Service"></img>
                 <section>
-                    <h1> {service.name}</h1>
+                    <h2> {service.name}</h2>
                     <p>
                 {service.description}
                 </p>
@@ -34,6 +51,8 @@ const ServicePage: React.FC = () => {
             </div>
             )))}
             </div>
+        </div>
+        <Footer></Footer>
         </div>
     );
 };

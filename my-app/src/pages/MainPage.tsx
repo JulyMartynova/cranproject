@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import logo from './logo.png';
-import user from './user.jpg'
-import bot from './TG_Bot_QR_Code.jpg'
+import user from './user.jpg';
+import bot from './TG_Bot_QR_Code.jpg';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Render = ({filledStars} : {filledStars: number}) => {
     const totalStars = 5;
@@ -67,14 +69,23 @@ interface Review {
     username: string;
 }
 const reviews: Review[] = [
-    { id: 1, text: " ationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 3, username: "User", img :'./user.jpg'},
-    { id: 2, img :'./user.jpg', text: " Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru exercitationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 4, username: "User"},
-    { id: 3, img :'./user.jpg', text: " Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru exercitationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User"},
-    { id: 4, img :'./user.jpg', text: " Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru exercitationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 2, username: "User"},
-    { id: 5, img :'./user.jpg', text: " Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru exercitationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User"},
-    { id: 6, img :'./user.jpg', text: " Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru exercitationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User"},
+    { id: 1, text: " ationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 3, username: "User", img : user},
+    { id: 2, img : user, text: " Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru exercitationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 4, username: "User"},
+    { id: 3, img :user, text: " Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru exercitationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User"},
+    { id: 4, img : user, text: " Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru exercitationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 2, username: "User"},
+    { id: 5, img : user, text: " Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru exercitationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User"},
+    { id: 6, img : user, text: " Lorem ipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostru exercitationullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User"},
 ];
 const [startIndex, setStartIndex] = useState(0);
+const customStyles = {
+    header: {
+      backgroundColor: 'black',
+      color: 'white',
+    },
+    navItem: {
+      color: 'white',
+    },
+  };
 
 const reviewsShow = 4;
 const reviewsSlice = reviews.slice(startIndex, startIndex + reviewsShow);
@@ -84,8 +95,21 @@ const handlePrevious = () => {
 const handleNext = () => {
     setStartIndex((prevIndex) => Math.min(prevIndex + 1, reviews.length - reviewsShow));
 };
+const handleSubmit = (e : React.FormEvent) => {
+    e.preventDefault();
+};
+const handleClose = () => {
+    const element = document.querySelector("fieldset");
+    if (element) {
+        element.classList.add('closed');
+        console.log('Элемент скрыт');
+    } else {
+        console.error('Элемент не найден');
+    }
+};
 return (
-    <div>
+    <div className = "homepage">
+        <Header styles = {customStyles}></Header>
     <section className="cran-container">
            
         <div className="text-container">
@@ -97,7 +121,7 @@ return (
                 погружайтесь в историю с помощью дополненной
                 реальности.
             </p>
-            <a href="/about" target="_blank" rel="noopener noreferrer">
+            <a href="/products" target="_blank" rel="noopener noreferrer">
                     Создай свою реальность
                 
             </a>
@@ -125,7 +149,6 @@ return (
                     <h3>Review {review.id}</h3>
                     <Render filledStars = {review.mark}/>
                     <p>{review.text}</p>
-                    
                     <span></span>
                     <figure>
                 <img src={review.img} alt="user" />
@@ -176,6 +199,19 @@ return (
                     Бот тут
                 </a>
             </div> 
+            <form>
+                
+    <fieldset>
+        <legend>Хотите связаться?</legend>
+        <button type = "button" className='close' onClick={handleClose}>X</button>
+        <input type="text"  placeholder='Введите имя'/>
+        <input type="text"  placeholder='Введите фамилию'/>
+        <input type="text"  placeholder='Введите почту'/>
+        <button type="submit" onClick={handleSubmit}>Отправить</button>
+    </fieldset>
+</form>
+
+            <Footer></Footer>
         </div>
         
 
