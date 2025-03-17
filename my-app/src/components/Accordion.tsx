@@ -1,4 +1,30 @@
 import PropTypes from 'prop-types';
+import React, { forwardRef, ForwardRefRenderFunction } from 'react';
+
+
+export interface QuestionAnswer {
+    question: string;
+    answer: string;
+  }
+  
+interface AccordionProps {
+    questionsAnswers: QuestionAnswer[];
+  }
+  const Accordion: ForwardRefRenderFunction<HTMLDivElement, AccordionProps> = (
+    { questionsAnswers },
+    ref
+  ) => {
+    return (
+      <div className="accordion-qa" ref={ref}>
+        {questionsAnswers.map((qa, index) => (
+          <details className="question-answer" key={index}>
+            <summary>{qa.question}</summary>
+            <p>{qa.answer}</p>
+          </details>
+        ))}
+      </div>
+    );
+  };
 
 Accordion.propTypes = {
     questionsAnswers: PropTypes.arrayOf(
@@ -8,29 +34,4 @@ Accordion.propTypes = {
         })
     ).isRequired,
 };
-interface QuestionAnswer {
-    question: string;
-    answer: string;
-  }
-  
-interface AccordionProps {
-    questionsAnswers: QuestionAnswer[];
-  }
-function Accordion({ questionsAnswers } : AccordionProps) {
-    return (
-        <div className="accordion-qa" >
-            {questionsAnswers.map((qa, index) => (
-                
-                    <details className="question-answer" key={index}>
-                        <summary>
-                            <h1>{qa.question}</h1>
-                        </summary>
-                        <p>{qa.answer}</p>
-                    </details>
-                
-            ))}
-        </div>
-    );
-}
-
-export default Accordion;
+export default forwardRef(Accordion);
