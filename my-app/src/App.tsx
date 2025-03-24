@@ -1,19 +1,22 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom';
 import './App.css';
 import MainPage from './pages/MainPage'; // Убедитесь, что путь к файлу правильный
 import CommandPage from './pages/CommandPage';
 import ServicePage from './pages/ServicePage';
-
+import ProductsPage from './pages/ProductsPage'
+import ProductPage from './pages/ProductPage';
 const App: React.FC = () => {
   return (
-    // <Routes>
-    //   <Route path="/" element = {<MainPage/>} />
-    //   <Route path="/about" element = {<CommandPage/>} />
-    // </Routes>
-    <div>
-      <MainPage />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/about" element={<CommandPage/>} />
+        <Route path="/services" element={<ServicePage />} />
+        <Route path = "/products" element = {<ProductsPage/>} />
+        <Route path = "/products/:productName" element = {<ProductPage/>}/>
+      </Routes>
+    </Router>
   )
 }
 
