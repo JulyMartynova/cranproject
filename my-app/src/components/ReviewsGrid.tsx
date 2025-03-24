@@ -53,7 +53,10 @@ const ReviewsGrid: ForwardRefRenderFunction<HTMLDivElement, ReviewsProps> = ({ r
   }
 
   return (
-    <div className="review-container" ref={ref}>
+    <div className='review-container-with-header' ref={ref}>
+      <h2>Что о нас думают?</h2>
+      <div className="review-container" >
+      
       <button className="previous" onClick={handlePrevious} disabled={startIndex === 0}>
         &lt;
       </button>
@@ -83,6 +86,7 @@ const ReviewsGrid: ForwardRefRenderFunction<HTMLDivElement, ReviewsProps> = ({ r
       <button className="next" onClick={handleNext} disabled={startIndex >= reviews.length - reviewsShow}>
         &gt;
       </button>
+    </div>
     </div>
   );
 };

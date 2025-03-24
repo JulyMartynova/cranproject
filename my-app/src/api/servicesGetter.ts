@@ -5,6 +5,7 @@ export interface Service {
     name: string;
     description: string;
     img: string;
+
 };
 
 export const fetchServices = async (): Promise<Service[]> => {

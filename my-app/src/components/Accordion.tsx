@@ -11,7 +11,7 @@ interface AccordionProps {
   }
   const Accordion: ForwardRefRenderFunction<HTMLDivElement, AccordionProps> = (
     { questionsAnswers },
-    ref?
+    ref
   ) => {
     return (
       <div className="accordion-qa" ref={ref}>

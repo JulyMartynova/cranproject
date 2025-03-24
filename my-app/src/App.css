@@ -3,7 +3,7 @@
   --heading-font: "Raleway",  sans-serif;
   --nav-font: "Poppins",  sans-serif;
   --default-color: #000000;
-  --default-background: url("./background.jpg");
+  /* --default-background: url("./background.jpg"); */
   --default-font-size: 1.1rem;
   --default-button-background:#d0d0d0;
   --default-accordion-color:  #c0c0c0;
@@ -290,10 +290,17 @@ section{
   justify-content: space-between;
   align-items: center;
   /* margin: 3vh 5vw; */
+  
+}
+.review-container-with-header {
   opacity: 0;
   transform: translateY(5vh);
   transition: transform 0.5s, opacity 0.5s;
-  
+}
+.review-container-with-header h2 {
+  margin-top: '0'; 
+  margin-bottom: '1.5em' ;
+  align-self: flex-end;
 }
 .review-slider {
   width: 80vw;
@@ -574,21 +581,23 @@ footer a:hover{
   }
 }
 .button-container {
-  animation: slideUp 1s ease-in-out forwards;
+  margin-top: 0;
+  animation: slideUp 1s ease-in-out both 0.5s;
   display: flex;
   flex-direction: row;
   gap: 0.5em;
   justify-content: flex-start;
 }
 .button-container a svg {
-  width: 1em; /* Уменьшили размер иконки */
-  height: 1em;
+  width: 0.8em; /* Уменьшили размер иконки */
+  height: 0.8em;
 }
 .button-container a {
   color: white;
   background-color: black;
   border-radius: 50px;
-  padding: 0.6em 0.9em;
+  padding: 0.675em 0.625em;
+  font-size: 0.8em;
   text-align: center;
   text-decoration: none;
   display: flex;

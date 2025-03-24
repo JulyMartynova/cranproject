@@ -190,7 +190,7 @@ const MainPage: React.FC = () => {
         </div>
         <Carousel products={photos} ref={additionalRefs.current[2]} /> */}
         <div>
-          <h2 style={{ marginTop: '0', marginBottom: '1.5em' }}>Что о нас думают?</h2>
+          
           <ReviewsGrid reviews={reviews} ref={additionalRefs.current[3]}></ReviewsGrid>
         </div>
         {/* <div className="team-container" id="team" ref={additionalRefs.current[4]}>
