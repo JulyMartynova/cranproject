@@ -65,9 +65,9 @@ const ProductPage: React.FC = () => {
           if (blockPosition < windowHeight - 100) {
             blockRef.current.style.opacity = "1";
             blockRef.current.style.transform = "translateY(0) translateX(0)";
-            const refClass = blockRef.current.className;
-            const subString = "review";
-            blockRef.current.style.transitionDelay = refClass.includes(subString) ? "1s" :  "0s"
+            // const refClass = blockRef.current.className;
+            // const subString = "review";
+            // blockRef.current.style.transitionDelay = refClass.includes(subString) ? "1s" :  "0s"
           } else {
             blockRef.current.style.opacity = "0";
             const refClass = blockRef.current.className;
