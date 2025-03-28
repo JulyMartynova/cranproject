@@ -2,8 +2,14 @@ import React, {useEffect} from "react";
 import serv from "../img/sev1.jpg";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import {Service} from "../api/servicesGetter";
 
+interface Service {
+    id: number;
+    name: string;
+    description: string;
+    img: string;
+  
+  };
 const services : Service[] = [{
     id: 1, name: "AR-Экскурсии", description: "Добавляем интерактивные AR-элементы для улучшения вашего экскурсионного опыта.Нужно чуть больше и больше информации.", img: serv,
 },

@@ -8,14 +8,15 @@ interface commamndMember {
     surname: string;
     username: string;
     url: string;
+    img: string;
 }
 const members: commamndMember[] = [
-    { id: 1, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin' , url: "https://t.me/artem_volkonitin"},
-    { id: 2, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin"},
-    { id: 3, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin"},
-    { id: 4, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin"},
-    { id: 5, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin"},
-    { id: 6, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin"},
+    { id: 1, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin' , url: "https://t.me/artem_volkonitin", img: tema},
+    { id: 2, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin", img: tema},
+    { id: 3, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin", img: tema},
+    { id: 4, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin", img: tema},
+    { id: 5, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin", img: tema},
+    { id: 6, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin", img: tema},
 ];
 const CommandPage: React.FC = () => {
     useEffect(() => {
@@ -37,7 +38,7 @@ const CommandPage: React.FC = () => {
             <div className="team">
                 {members.map((member) => (
                     <div className="member" key={member.id}>
-                        <img src={tema} alt="Member" loading='lazy'/>
+                        <img src={member.img} alt="Member" loading='lazy'/>
                         <span style = {{color: "gray"}}>Роль в компании</span>
                         <span>{member.name} {member.surname}</span>
                         <a href={member.url} target="_blank" rel="noopener noreferrer">

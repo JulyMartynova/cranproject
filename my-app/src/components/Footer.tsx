@@ -16,7 +16,7 @@ const Footer : React.FC = () => {
       <span>
           © Copyright Cran Project All Rights Reserved
       </span>
-      <a href="/" target="_blank" rel = "noopener noreferrer">
+      <a href="/rights"  rel = "noopener noreferrer">
           Права
       </a>
   </footer>

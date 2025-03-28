@@ -26,6 +26,11 @@ const productReviews: Review[] = [
   { id: 8, img: user, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User" },
 ];
 
+const customStyle  = {
+  reviewStyles: {
+    animation: 'slide 1s ease-in-out 2s both',
+  }
+}
 const productQusetionAnswers: QuestionAnswer[] = [
   { question: "Чем вы занимаетесь?", answer: "Мы — компания, которая переосмысливает экскурсионный туризм, объединяя традиционные форматы с передовыми технологиями дополненной реальности. CRAN предлагает инновационные подходы, которые делают опыт погружения более увлекательным, глубоким и информативным." },
   { question: "Чем вы занимаетесь?", answer: "Мы — компания, которая переосмысливает экскурсионный туризм, объединяя традиционные форматы с передовыми технологиями дополненной реальности. CRAN предлагает инновационные подходы, которые делают опыт погружения более увлекательным, глубоким и информативным." },
@@ -49,43 +54,17 @@ const ProductPage: React.FC = () => {
     reviews: Review[];
     questionAnswer: QuestionAnswer[];
   } | null>(null);
-  const refs= useRef ([
-    React.createRef<HTMLDivElement>(), // description
-    React.createRef<HTMLDivElement>(),
-  ]
-  )
-  const checkBlocksVisibility = (): void => {
-      const windowHeight = window.innerHeight;
-      const allRefs = [...refs.current];
+
+  const allRefs = useRef<(HTMLDivElement|null)[]>([]);
+
+  useEffect(() => {
+    allRefs.current = allRefs.current.slice(0, 1);
+
+    return () => {
+      allRefs.current = [];
+    }
+  }, [allRefs])
   
-      allRefs.forEach((blockRef, index) => {
-        if (blockRef.current) {
-          const blockPosition = blockRef.current.getBoundingClientRect().top;
-  
-          if (blockPosition < windowHeight - 100) {
-            blockRef.current.style.opacity = "1";
-            blockRef.current.style.transform = "translateY(0) translateX(0)";
-            // const refClass = blockRef.current.className;
-            // const subString = "review";
-            // blockRef.current.style.transitionDelay = refClass.includes(subString) ? "1s" :  "0s"
-          } else {
-            blockRef.current.style.opacity = "0";
-            const refClass = blockRef.current.className;
-            const subString = "description";
-            blockRef.current.style.transform = refClass.includes(subString) ? "translateX(-45vw)" :  "translateY(5vh)";
-          }
-        }
-      });
-    };
-  
-    useEffect(() => {
-      window.addEventListener('scroll', checkBlocksVisibility);
-      checkBlocksVisibility(); // Проверка при загрузке страницы
-  
-      return () => {
-        window.removeEventListener('scroll', checkBlocksVisibility);
-      };
-    }, []);
   useEffect(() => {
     if (productName) {
       const decodedProductName = decodeURIComponent(productName);
@@ -93,6 +72,10 @@ const ProductPage: React.FC = () => {
       setProduct(productData);
     }
   }, [productName]);
+
+  const setRef = (index: number) => (el : HTMLDivElement | null) => {
+    allRefs.current[index] = el;
+  }
 
   if (!product) {
     return <div>Loading...</div>;
@@ -102,11 +85,12 @@ const ProductPage: React.FC = () => {
     <div>
       <Header />
       <div className="wrapper">
-        <div className="description">
+        <div className="description" style = {{
+          animation: "slideUp 2s ease-in-out  both",
+        }}>
           <h1>{product.name}</h1>
           <p>{product.description}</p>
-        </div>
-        <div className="button-container">
+          <div className="button-container" style ={{ animation: 'slideUp 1s ease-in-out 1s both'}}>
           <a href="https://t.me/cranproject" target="_blank" rel="noopener noreferrer">
             <Download style={{ width: '30%' }} /> APK
           </a>
@@ -117,12 +101,12 @@ const ProductPage: React.FC = () => {
             <Store style={{ width: '30%' }} /> Ru Store
           </a>
         </div>
-        <div>
-          <ReviewsGrid reviews={product.reviews} ref = {refs.current[0]}/>
         </div>
-        <div>
-          <Accordion questionsAnswers={product.questionAnswer} ref = {refs.current[1]}/>
-        </div>
+        
+        
+          <ReviewsGrid reviews={product.reviews} styles = {customStyle}/>
+        
+          <Accordion questionsAnswers={product.questionAnswer} ref = {setRef(0)}/>
       </div>
       <Footer />
     </div>

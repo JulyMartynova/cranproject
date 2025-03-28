@@ -1,4 +1,4 @@
-import  { forwardRef, ForwardRefRenderFunction, useState, useMemo, useCallback, memo } from 'react';
+import  { forwardRef, ForwardRefRenderFunction, useState, useMemo, useCallback, memo, CSSProperties } from 'react';
 
 export interface Review {
   id: number;
@@ -10,6 +10,7 @@ export interface Review {
 
 interface ReviewsProps {
   reviews: Review[];
+  styles?: {reviewStyles?: CSSProperties}
 }
 
 const Render = memo(({ filledStars }: { filledStars: number }) => {
@@ -21,7 +22,7 @@ const Render = memo(({ filledStars }: { filledStars: number }) => {
           key={index}
           style={{
             color: 'black',
-            fontSize: '24px',
+            fontSize: '1.4em',
           }}
         >
           {index < filledStars ? '★' : '☆'}
@@ -31,7 +32,7 @@ const Render = memo(({ filledStars }: { filledStars: number }) => {
   );
 });
 
-const ReviewsGrid: ForwardRefRenderFunction<HTMLDivElement, ReviewsProps> = ({ reviews }, ref) => {
+const ReviewsGrid: ForwardRefRenderFunction<HTMLDivElement, ReviewsProps> = ({ reviews, styles = {} }, ref) => {
   const [startIndex, setStartIndex] = useState(0);
   const reviewsShow = 4;
 
@@ -53,7 +54,7 @@ const ReviewsGrid: ForwardRefRenderFunction<HTMLDivElement, ReviewsProps> = ({ r
   }
 
   return (
-    <div className='review-container-with-header' ref={ref}>
+    <div  ref={ref} style = {styles.reviewStyles}>
       <h2>Что о нас думают?</h2>
       <div className="review-container" >
       

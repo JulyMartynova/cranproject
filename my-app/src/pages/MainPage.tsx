@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Accordion, { QuestionAnswer } from '../components/Accordion';
 import ReviewsGrid, { Review } from '../components/ReviewsGrid';
 import Carousel, { Product } from '../components/Carousel';
-import { Service, fetchServices } from "../api/servicesGetter";
+import VisibilityChecker from '../components/checkBlockVisibility';
 import logo from '../img/logo.svg';
 import tema from '../img/Артемий.jpg';
 import user from '../img/user.jpg';
@@ -13,6 +13,13 @@ import sev1 from '../img/sev1.jpg';
 import sev2 from '../img/sev2.jpg';
 import sev3 from '../img/sev3.jpg';
 
+interface Service {
+  id: number;
+  name: string;
+  description: string;
+  img: string;
+
+};
 const reviews: Review[] = [
   { id: 1, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 3, username: "User", img: user },
   { id: 2, img: user, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 4, username: "User" },
@@ -31,6 +38,27 @@ const qusetionAnswers: QuestionAnswer[] = [
   { question: "Чем вы занимаетесь?", answer: "Мы — компания, которая переосмысливает экскурсионный туризм, объединяя традиционные форматы с передовыми технологиями дополненной реальности. CRAN предлагает инновационные подходы, которые делают опыт погружения более увлекательным, глубоким и информативным." },
 ];
 
+const productReviews: Review[] = [
+  { id: 1, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 3, username: "User", img: user },
+  { id: 2, img: user, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 4, username: "User" },
+  { id: 3, img: user, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User" },
+  { id: 4, img: user, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 2, username: "User" },
+  { id: 5, img: user, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User" },
+  { id: 6, img: user, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User" },
+  { id: 7, img: user, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User" },
+  { id: 8, img: user, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", mark: 5, username: "User" },
+];
+
+
+
+const productQusetionAnswers: QuestionAnswer[] = [
+  { question: "Чем вы занимаетесь?", answer: "Мы — компания, которая переосмысливает экскурсионный туризм, объединяя традиционные форматы с передовыми технологиями дополненной реальности. CRAN предлагает инновационные подходы, которые делают опыт погружения более увлекательным, глубоким и информативным." },
+  { question: "Чем вы занимаетесь?", answer: "Мы — компания, которая переосмысливает экскурсионный туризм, объединяя традиционные форматы с передовыми технологиями дополненной реальности. CRAN предлагает инновационные подходы, которые делают опыт погружения более увлекательным, глубоким и информативным." },
+  { question: "Чем вы занимаетесь?", answer: "Мы — компания, которая переосмысливает экскурсионный туризм, объединяя традиционные форматы с передовыми технологиями дополненной реальности. CRAN предлагает инновационные подходы, которые делают опыт погружения более увлекательным, глубоким и информативным." },
+  { question: "Чем вы занимаетесь?", answer: "Мы — компания, которая переосмысливает экскурсионный туризм, объединяя традиционные форматы с передовыми технологиями дополненной реальности. CRAN предлагает инновационные подходы, которые делают опыт погружения более увлекательным, глубоким и информативным." },
+];
+
+
 const customStyles = {
   header: {
     backgroundColor: 'black',
@@ -47,22 +75,20 @@ interface CommandMember {
   surname: string;
   username: string;
   url: string;
+  img: string,
 }
 
-// const photos: Product[] = [
-//   { id: 1, img: sev1, name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-//   { id: 2, img: sev2, name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-//   { id: 3, img: sev3, name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-// ];
+const productsAll: Product[] = [
+  { id: 1, img: sev1, name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ", reviews: productReviews, questionAnswer: productQusetionAnswers },
+  { id: 2, img: sev2,  name: "Lorem ipsum dolor sit", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ", reviews: productReviews, questionAnswer: productQusetionAnswers},
+  { id: 3, img: sev3,  name: "Lorem ipsum dolor", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ", reviews: productReviews, questionAnswer: productQusetionAnswers},
+];
 
-// const members: CommandMember[] = [
-//   { id: 1, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin" },
-//   { id: 2, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin" },
-//   { id: 3, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin" },
-//   { id: 4, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin" },
-//   { id: 5, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin" },
-//   { id: 6, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin" },
-// ];
+const members: CommandMember[] = [
+  { id: 1, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin", img: tema },
+  { id: 2, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin", img: tema},
+  { id: 3, name: 'Artem', surname: 'Volkonitin', username: '@artem_volkonitin', url: "https://t.me/artem_volkonitin", img: tema },
+];
 
 const services: Service[] = [
   { id: 1, name: "AR-Экскурсии", description: "Добавляем интерактивные AR-элементы для улучшения вашего экскурсионного опыта.", img: sev1 },
@@ -71,68 +97,25 @@ const services: Service[] = [
 ];
 
 const MainPage: React.FC = () => {
-  const [autoPlay, setPlay] = useState(true);
-  const [index, setCurrentIndex] = useState(0);
-  const blockRefs = useRef(services.map(() => React.createRef<HTMLDivElement>()));
-  const additionalRefs = useRef([
-    React.createRef<HTMLDivElement>(), // description
-    React.createRef<HTMLDivElement>(), // products
-    React.createRef<HTMLDivElement>(), // reviews
-    React.createRef<HTMLDivElement>(), // team
-    React.createRef<HTMLDivElement>(), // accordion
-    React.createRef<HTMLDivElement>(),
-    React.createRef<HTMLDivElement>(),
-    React.createRef<HTMLDivElement>(), // tg_bot
-  ]);
-
-  
-
-  // const goToPrevious = () => {
-  //  
-  //   setCurrentIndex((prevIndex) => (prevIndex === 0 ? photos.length - 1 : prevIndex - 1));
-  // };
-
-  // const goToNext = () => {
-  //   
-  //   setCurrentIndex((prevIndex) => (prevIndex === photos.length - 1 ? 0 : prevIndex + 1));
-  // };
-
-  const checkBlocksVisibility = (): void => {
-    const windowHeight = window.innerHeight;
-
-    const allRefs = [...blockRefs.current, ...additionalRefs.current];
-
-    allRefs.forEach((blockRef, index) => {
-      if (blockRef.current) {
-        const blockPosition = blockRef.current.getBoundingClientRect().top;
-
-        if (blockPosition < windowHeight - 100) {
-          blockRef.current.style.opacity = "1";
-          blockRef.current.style.transform = "translateY(0) translateX(0)";
-        } else {
-          blockRef.current.style.opacity = "0";
-          const refClass = blockRef.current.className;
-          const subString = "description";
-          blockRef.current.style.transform = refClass.includes(subString) ? "translateX(-45vw)" :  "translateY(5vh)";
-        }
-      }
-    });
-  };
+  const blockRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const additionalRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    window.addEventListener('scroll', checkBlocksVisibility);
-    checkBlocksVisibility(); // Проверка при загрузке страницы
-
-    return () => {
-      window.removeEventListener('scroll', checkBlocksVisibility);
-    };
+    blockRefs.current = blockRefs.current.slice(0, services.length);
+    additionalRefs.current = additionalRefs.current.slice(0, 8);
   }, []);
 
- 
+  const setBlockRef = (index: number) => (el: HTMLDivElement | null) => {
+    blockRefs.current[index] = el;
+  };
 
+  const setAdditionalRef = (index: number) => (el: HTMLDivElement | null) => {
+    additionalRefs.current[index] = el;
+  };
 
   return (
     <div id="#homepage">
+      <VisibilityChecker blockRefs={blockRefs} additionalRefs={additionalRefs} />
       <Header styles={customStyles} img={logo}></Header>
       <section>
         <div className="info">
@@ -165,40 +148,39 @@ const MainPage: React.FC = () => {
         </svg>
       </section>
       <div className='wrapper'>
-        {/* <div className="description" ref={additionalRefs.current[0]}>
+        <div className="description" ref={setAdditionalRef(0)}>
           <h2>Привет, познакомимся?</h2>
           <p>
             Мы переосмысливаем взаимодействие с виртуальной и дополненной реальностью, объединяя инновационные технологии с традиционными форматами. С нами вы сможете открыть новые горизонты восприятия, погружаясь в миры, где технологии и креативность создают незабываемые впечатления.
           </p>
-        </div> */}
-        {/* <div className="service-container" id="services" ref={additionalRefs.current[7]}>
+        </div>
+        <div className="service-container" id="services" ref={setAdditionalRef(7)}>
           {services.map((service, index) => (
             <div className="service" key={service.id}>
               <img src={service.img} alt="Service" />
-              <div className="service-description" ref={blockRefs.current[index]}>
+              <div className="service-description" ref={setBlockRef(index)}>
                 <h3>{service.name}</h3>
                 <p>{service.description}</p>
               </div>
             </div>
           ))}
-        </div> */}
-        {/* <div className="description" id="products" ref={additionalRefs.current[1]}>
+        </div>
+        <div className="description" id="products" ref={setAdditionalRef(1)}>
           <h2>Одно приложение для множества активностей</h2>
           <p>
             Проходите увлекательные квесты, посещайте захватывающие экскурсии и добавляйте яркие моменты с помощью AR-опыта – всё это собрано в одном удобном приложении прямо на вашем смартфоне!
           </p>
         </div>
-        <Carousel products={photos} ref={additionalRefs.current[2]} /> */}
+        <Carousel products={productsAll} ref={setAdditionalRef(2)} />
         <div>
-          
-          <ReviewsGrid reviews={reviews} ref={additionalRefs.current[3]}></ReviewsGrid>
+          <ReviewsGrid reviews={reviews} ref={setAdditionalRef(3)}></ReviewsGrid>
         </div>
-        {/* <div className="team-container" id="team" ref={additionalRefs.current[4]}>
+        <div className="team-container" id="team" ref={setAdditionalRef(4)}>
           <h2>Наша команда</h2>
-          <div className="team">
+          <div className="team-members">
             {members.map((member) => (
               <div className="member" key={member.id}>
-                <img src={tema} alt="Member" />
+                <img src={member.img} alt="Member" />
                 <span style={{ color: "gray" }}>Роль в компании</span>
                 <span>{member.name} {member.surname}</span>
                 <a href={member.url} target="_blank" rel="noopener noreferrer">
@@ -207,15 +189,16 @@ const MainPage: React.FC = () => {
               </div>
             ))}
           </div>
-        </div> */}
-        <Accordion questionsAnswers={qusetionAnswers} ref={additionalRefs.current[5]}></Accordion>
-        <div id="tg_bot" ref={additionalRefs.current[6]}>
+        </div>
+        <Accordion questionsAnswers={qusetionAnswers} ref={setAdditionalRef(5)}></Accordion>
+        <div id="tg_bot" ref={setAdditionalRef(6)}>
           <h2>Хотите дружить?</h2>
           <div className="QR">
             <p>
               Есть другие вопросы или идеи для сотрудничества? Хотите узнать о нас больше? Просто напишите нашему Telegram-боту, и мы с радостью всё расскажем и обсудим!
             </p>
             <img src={bot} alt="QR code" />
+            
           </div>
           <a href="https://t.me/CRAN_Helper_bot" target="_blank" rel="noopener noreferrer" className="bot_button">
             Бот тут
@@ -226,5 +209,7 @@ const MainPage: React.FC = () => {
     </div>
   );
 };
+
+
 
 export default MainPage;
